@@ -3,8 +3,10 @@ from typing import List, Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+
+
 class Image(BaseModel):
-    id: int
+    image_id: int
     type: str
     tags: str
     preview_url: str
@@ -13,7 +15,7 @@ class Image(BaseModel):
     downloads: int
     likes: int
 
-class ImagesRequest(BaseModel):
+class ImagesResponseForApi(BaseModel):
     total: int
     totalHits: int
     hits: List[Image]
