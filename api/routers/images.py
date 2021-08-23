@@ -6,14 +6,10 @@ import api.cruds.images as images_cruds
 
 router = APIRouter()
 
-@router.get("/images", response_model=Any)
+@router.get("/images", response_model=List[images_schema.Image])
 def get_images_at_random():
     # [バックエンド] 画像をランダムに10枚取得する
-
-    # １，画像をapiを使ってランダムに取得する処理
-    return images_cruds.get_images_at_random()
-    # どうやってランダム性を担保するか？
-    # ２，取得した画像を一覧を返す処理
+    return images_cruds.fetch_images_from_pixabay()
 
 @router.get("/images/{image_id}", response_model=images_schema.Image)
 def get_image_detail():
@@ -23,7 +19,7 @@ def get_image_detail():
     # ２，取得した画像を返す処理
     pass
 
-@router.get("/images/{category_name}")
+@router.get("/images/{category_name}", response_model=List[images_schema.Image])
 def get_images_by_category():
     # [バックエンド] ジャンルを指定し、画像をランダムに10枚取得できる
     
