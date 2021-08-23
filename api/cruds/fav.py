@@ -1,5 +1,7 @@
 from typing import List, Tuple, Callable, Any
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.engine import Result
+
 
 
 import api.models.model as model
@@ -20,3 +22,18 @@ async def create_favorite_image(
     await db.refresh(favorite_image)
     return favorite_image
 
+
+async def read_user_favorite_images(
+    db: AsyncSession
+) -> List[schemas_fav.FavoriteImage]:
+    # @TODO:ログインユーザーのIDを取得する
+    result: Result = await (
+        db.execute(
+            select(
+                model.FavoriteImage.id,
+                model.FavoriteImage.user_id,
+                model.FavoriteImage.id.isnot(None).label("done"),
+            ).outerjoin(model.Done)
+        )
+    )
+    return result.all()

@@ -17,26 +17,7 @@ async def post_fav_image(
     db: AsyncSession = Depends(get_db)
     ):
     #  [バックエンド] 画像を1枚お気に入り登録できる
-    # 1,image_bodyの画像をDBに保存する
-    # 2,dbから返却されたidを返す。
-    # image_body({
-    #     	        "id": 195893,
-    #              "user_id": 5,
-    #     "pageURL": "https://pixabay.com/en/blossom-bloom-flower-195893/",
-    #     "type": "photo",
-    #     "tags": "blossom, bloom, flower",
-    #     "previewURL": "https://cdn.pixabay.com/photo/2013/10/15/09/12/flower-195893_150.jpg"
-    #     "previewWidth": 150,
-    #     "previewHeight": 84,
-    #     "webformatURL": "https://pixabay.com/get/35bbf209e13e39d2_640.jpg",
-    #     "webformatWidth": 640,
-    #     "webformatHeight": 360,
-    #     "largeImageURL": "https://pixabay.com/get/ed6a99fd0a76647_1280.jpg",
-    #             "downloads": 6439,
-    #     "likes": 5,
-    # })
     return await create_favorite_image(db, image_body)
-
 
 @router.get("/fav/images", response_model=List[images_schema.Image])
 def get_fav_images():
