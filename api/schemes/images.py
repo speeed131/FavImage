@@ -3,7 +3,6 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
-
 class Image(BaseModel):
     image_id: int
     type: Optional[str]
