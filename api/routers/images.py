@@ -1,7 +1,7 @@
 from typing import Any, List
 from fastapi import APIRouter
 
-import api.schemes.images as images_schema
+import api.schemas.images as images_schema
 import api.cruds.images as images_cruds
 
 router = APIRouter()

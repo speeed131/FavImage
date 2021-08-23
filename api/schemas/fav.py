@@ -2,11 +2,11 @@ from typing import Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from api.schemes.images import Image
+from api.schemas.images import Image
 
 
 class FavoriteImage(Image):
-    pass
+    user_id: int
 
 class FavoriteImageResponse(BaseModel):
     id: int

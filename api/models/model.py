@@ -8,8 +8,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    email = Column(String(255), nullable=False)
-    hashed_password = Column(CHAR(60), nullable=False)
+    # @TODO:ログイン実装時に追加
+    # email = Column(String(255), nullable=False)
+    # hashed_password = Column(CHAR(60), nullable=False)
 
     favorite_image = relationship("FavoriteImage", back_populates="user")
 
@@ -18,13 +19,13 @@ class FavoriteImage(Base):
     __tablename__ = "favorite_images"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    image_id = Column(Integer)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    image_id = Column(Integer, nullable=False)
     type = Column(String(500))
     tags = Column(String(500))
-    page_url = Column(String(500))
-    preview_url = Column(String(500))
-    webformat_url = Column(String(500))
+    page_url = Column(String(500), nullable=False)
+    preview_url = Column(String(500), nullable=False)
+    webformat_url = Column(String(500), nullable=False)
     large_image_url = Column(String(500))
     downloads = Column(String(500))
     likes = Column(Integer)

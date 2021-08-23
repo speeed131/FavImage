@@ -4,7 +4,7 @@ import requests
 import json
 import random
 
-import api.schemes.images as images_schema
+import api.schemas.images as images_schema
 import api.settings as settings
 
 # from sqlalchemy import select
