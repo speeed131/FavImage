@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 class User(BaseModel):
-    # id: int
+    id: int
     username: str
     email: Optional[str]
     disabled: Optional[bool] = None

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, CHAR
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.sqltypes import Boolean
 
 from api.db import Base
 
@@ -8,9 +9,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    # @TODO:ログイン実装時に追加
-    # email = Column(String(255), nullable=False)
-    # hashed_password = Column(CHAR(60), nullable=False)
+    username = Column(String(255), nullable=False)
+    email = Column(String(255))
+    hashed_password = Column(CHAR(60), nullable=False)
+    disabled = Column(Boolean, default=False)
 
     favorite_image = relationship("FavoriteImage", back_populates="user")
 

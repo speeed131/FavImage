@@ -11,7 +11,7 @@ router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 
@@ -28,14 +28,12 @@ def login():
 # @TODO:後に変更する
 fake_users_db = {
     "johndoe": {
+        "id": 1,
         "username": "johndoe",
         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
         "disabled": False,
     },
 }
-
-# def fake_hash_password(password: str):
-#     return "fakehashed" + password
 
 @router.get("/items/")
 async def read_items(token: str = Depends(oauth2_scheme)):
