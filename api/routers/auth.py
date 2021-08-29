@@ -19,29 +19,12 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
 @router.post("/register")
 def register():
     # [バックエンド] ユーザー登録できる
     pass
 
-# @router.post("/login")
-# def login():
-#     # [バックエンド] ログインできる。
-#     pass
-
-
-# @TODO:後に変更する
-# fake_users_db = {
-#     "johndoe": {
-#         "id": 1,
-#         "username": "johndoe",
-#         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-#         "disabled": False,
-#     },
-# }
-
-
+# ログイン機能
 @router.post("/token", response_model=auth_schemas.Token)
 async def login_for_access_token(
         db: AsyncSession = Depends(get_db),
@@ -63,7 +46,7 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/users/me", response_model=auth_schemas.User)
+@router.get("/users/me", response_model=auth_schemas.UserInDB)
 async def read_users_me(current_user: auth_schemas.User = Depends(auth_cruds.get_current_active_user)):
     return current_user
 
@@ -71,4 +54,4 @@ async def read_users_me(current_user: auth_schemas.User = Depends(auth_cruds.get
 # @TODO:型をAnyから適切なのに変更する
 @router.get("/users", response_model=Any)
 async def read_users(db: AsyncSession = Depends(get_db)):
-    return auth_cruds.get_users(db)
+    return await auth_cruds.get_users(db)

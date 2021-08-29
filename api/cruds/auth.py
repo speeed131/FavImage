@@ -6,6 +6,7 @@ from jose import JWTError, jwt
 
 from sqlalchemy import select
 from sqlalchemy.engine import Result
+from api.db import get_db
 
 
 import api.schemas.auth as auth_schemas
@@ -25,16 +26,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# @TODO:後に変更する
-fake_users_db = {
-    "johndoe": {
-        "id": 1,
-        "username": "johndoe",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    },
-}
-
 # @TODO:型をAnyから適切なのに変更する
 async def get_users(db: AsyncSession) -> Any:
     result: Result = await db.execute(
@@ -47,7 +38,6 @@ async def get_user_from_db(db: AsyncSession, username: str):
     users = await get_users(db)
     for i in range(len(users)):
         if username in users[i].User.username:
-            # user_dict = db[username]
             return users[i].User
 
 
@@ -71,7 +61,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(db: AsyncSession = Depends(get_db), token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -85,7 +75,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         token_data = auth_schemas.TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user_from_db(fake_users_db, username=token_data.username)
+    user = await get_user_from_db(db, username=token_data.username)
     if user is None:
         raise credentials_exception
     return user
