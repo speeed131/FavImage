@@ -1,11 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-import api.schemas.auth as auth_schemas
+from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
-import api.settings as settings
 from jose import JWTError, jwt
+
+from sqlalchemy import select
+from sqlalchemy.engine import Result
+
+
+import api.schemas.auth as auth_schemas
+import api.settings as settings
+import api.models.model as model
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Any, List
 
 
 SECRET_KEY = settings.SECRET_KEY
@@ -28,13 +35,24 @@ fake_users_db = {
     },
 }
 
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return auth_schemas.UserInDB(**user_dict)
+# @TODO:型をAnyから適切なのに変更する
+async def get_users(db: AsyncSession) -> Any:
+    result: Result = await db.execute(
+        select(model.User)
+        )
+    return result.all()
 
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
+
+async def get_user_from_db(db: AsyncSession, username: str):
+    users = await get_users(db)
+    for i in range(len(users)):
+        if username in users[i].User.username:
+            # user_dict = db[username]
+            return users[i].User
+
+
+async def authenticate_user(db: AsyncSession, username: str, password: str):
+    user = await get_user_from_db(db, username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -52,6 +70,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -66,19 +85,21 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         token_data = auth_schemas.TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
+    user = get_user_from_db(fake_users_db, username=token_data.username)
     if user is None:
         raise credentials_exception
     return user
+
 
 async def get_current_active_user(current_user: auth_schemas.User = Depends(get_current_user)):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
+
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
+
 def get_password_hash(password):
     return pwd_context.hash(password)
-

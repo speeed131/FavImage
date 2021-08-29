@@ -1,9 +1,15 @@
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from sqlalchemy.ext.asyncio import AsyncSession
+
 import api.settings as settings
 import api.cruds.auth as auth_cruds
 import api.schemas.auth as auth_schemas
 from datetime import datetime, timedelta
+from typing import Any, List
+
+from api.db import get_db
+
 
 # import api.routers.auth  as
 
@@ -14,34 +20,36 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-
 @router.post("/register")
 def register():
     # [バックエンド] ユーザー登録できる
     pass
 
-@router.post("/login")
-def login():
-    # [バックエンド] ログインできる。
-    pass
+# @router.post("/login")
+# def login():
+#     # [バックエンド] ログインできる。
+#     pass
+
 
 # @TODO:後に変更する
-fake_users_db = {
-    "johndoe": {
-        "id": 1,
-        "username": "johndoe",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    },
-}
+# fake_users_db = {
+#     "johndoe": {
+#         "id": 1,
+#         "username": "johndoe",
+#         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+#         "disabled": False,
+#     },
+# }
 
-@router.get("/items/")
-async def read_items(token: str = Depends(oauth2_scheme)):
-    return {"token": token}
 
 @router.post("/token", response_model=auth_schemas.Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = auth_cruds.authenticate_user(fake_users_db, form_data.username, form_data.password)
+async def login_for_access_token(
+        db: AsyncSession = Depends(get_db),
+        form_data: OAuth2PasswordRequestForm = Depends()
+):
+    # DBから取得
+    user = await auth_cruds.authenticate_user(
+        db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -60,3 +68,7 @@ async def read_users_me(current_user: auth_schemas.User = Depends(auth_cruds.get
     return current_user
 
 
+# @TODO:型をAnyから適切なのに変更する
+@router.get("/users", response_model=Any)
+async def read_users(db: AsyncSession = Depends(get_db)):
+    return auth_cruds.get_users(db)
