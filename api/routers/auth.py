@@ -1,3 +1,4 @@
+from sqlalchemy.sql.functions import user
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,10 +20,14 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-@router.post("/register")
-def register():
+@router.post("/register", response_model=auth_schemas.UserResponse)
+async def register(
+    register_data: auth_schemas.UserCreate,
+    db: AsyncSession = Depends(get_db)
+):
     # [バックエンド] ユーザー登録できる
-    pass
+    user = await auth_cruds.create_user(db, register_data)
+    return user
 
 # ログイン機能
 @router.post("/token", response_model=auth_schemas.Token)

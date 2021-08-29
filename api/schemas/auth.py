@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class User(BaseModel):
     id: int
@@ -11,6 +11,15 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+    class Config:
+        orm_mode = True
+
+class UserCreate(BaseModel):
+    username: str = Field(example="daiki")
+    password: str = Field(example="hirose")
+
+class UserResponse(BaseModel):
+    id: int
     class Config:
         orm_mode = True
 

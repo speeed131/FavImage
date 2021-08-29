@@ -9,7 +9,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String(255), nullable=False)
+    username = Column(String(255), nullable=False, unique=True)
     email = Column(String(255))
     hashed_password = Column(CHAR(60), nullable=False)
     disabled = Column(Boolean, default=False)

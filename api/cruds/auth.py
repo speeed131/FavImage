@@ -30,7 +30,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 async def get_users(db: AsyncSession) -> Any:
     result: Result = await db.execute(
         select(model.User)
-        )
+    )
     return result.all()
 
 
@@ -93,3 +93,18 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
+
+
+# @TODO:同じ名前のユーザーの場合、特定のエラーをはき、フロントに返す
+async def create_user(
+    db: AsyncSession,
+    register_data: auth_schemas.UserCreate
+) -> model.User:
+    user = model.User(
+        username = register_data.username,
+        hashed_password = get_password_hash(register_data.password),
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
+    return user
