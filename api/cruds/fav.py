@@ -33,6 +33,4 @@ async def read_favorite_images_by_user(
     result: Result = await db.execute(
         select(model.FavoriteImage).filter(model.FavoriteImage.user_id == user_id)
         )
-    print(result)
-    print(result.all)
     return result.all()

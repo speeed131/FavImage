@@ -19,13 +19,17 @@ router = APIRouter()
 @router.post("/fav/images", response_model=fav_schemas.FavoriteImageResponse)
 async def post_fav_image(
     image_body: fav_schemas.FavoriteImage,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)
     ):
 #  [バックエンド] 画像を1枚お気に入り登録できる
     return await fav_cruds.create_favorite_image(db, image_body)
 
 @router.get("/fav/images", response_model=Any) #@TODO:Anyを適切な型に修正
-async def get_fav_images(db: AsyncSession = Depends(get_db), current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)):
+async def get_fav_images(
+    db: AsyncSession = Depends(get_db),
+    current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)
+):
     # -[バックエンド] お気に入り登録した画像を一覧で取得できる
     user_id: int = current_user.id
     return await fav_cruds.read_favorite_images_by_user(db, user_id)
