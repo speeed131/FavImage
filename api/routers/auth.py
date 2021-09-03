@@ -53,6 +53,7 @@ async def login_for_access_token(
 
 @router.get("/users/me", response_model=auth_schemas.UserInDB)
 async def read_users_me(current_user: auth_schemas.User = Depends(auth_cruds.get_current_active_user)):
+    # @TODO:hashed_passwordは返さないようにする
     return current_user
 
 

@@ -28,7 +28,7 @@ async def create_favorite_image(
 async def read_favorite_images_by_user(
     db: AsyncSession,
     user_id: int
-) ->  Any:
+) -> model.FavoriteImage:
     #@TODO:Anyを適切な型に修正
     result: Result = await db.execute(
         select(model.FavoriteImage).filter(model.FavoriteImage.user_id == user_id)

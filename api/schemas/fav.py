@@ -7,6 +7,8 @@ from api.schemas.images import Image
 
 class FavoriteImage(Image):
     user_id: int = Field(example=1)
+    class Config:
+        orm_mode = True
 
 class FavoriteImageResponse(BaseModel):
     id: int
