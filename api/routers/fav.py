@@ -25,7 +25,7 @@ async def post_fav_image(
 #  [バックエンド] 画像を1枚お気に入り登録できる
     return await fav_cruds.create_favorite_image(db, image_body)
 
-@router.get("/fav/images", response_model=Any) #@TODO:Anyを適切な型に修正
+@router.get("/fav/images", response_model=List[fav_schemas.FavoriteImage])
 async def get_fav_images(
     db: AsyncSession = Depends(get_db),
     current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)

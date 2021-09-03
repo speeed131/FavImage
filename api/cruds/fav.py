@@ -33,4 +33,13 @@ async def read_favorite_images_by_user(
     result: Result = await db.execute(
         select(model.FavoriteImage).filter(model.FavoriteImage.user_id == user_id)
         )
-    return result.all()
+    favorite_images = result.all()
+    return make_response_data(favorite_images, "FavoriteImage")
+
+
+def make_response_data(data: List, model_name: str) -> List:
+    response_data = []
+    for i in data:
+        response_data.append(i[model_name])
+
+    return response_data
