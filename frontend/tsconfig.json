@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "baseUrl": "src",
+    "baseUrl": "src", //絶対パス指定用
     "lib": [
       "dom",
       "dom.iterable",

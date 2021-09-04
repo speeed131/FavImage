@@ -1,4 +1,5 @@
 import React, {useState, useEffect}  from 'react';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,18 +16,6 @@ import Container from '@material-ui/core/Container';
 import { api } from 'api/index'
 // import { request } from 'http';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,22 +37,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
-const handleSubmit = async (event: any) => {
-    const requestData = {
-        username: event.target.username.value,
-        password: event.target.password.value
-    }
-    // console.log(requestData)
-    const res = await api.auth.postUserRegister(requestData);
-    console.log(res);
-  };
+
 
 
 export default function SignUp() {
-  const classes = useStyles();
-//   const [username, setUsername] = useState("");
+    const classes = useStyles();
+    const [error, setError] = useState(false)
 
+    let history = useHistory();
+
+    // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const requestData = {
+            username: event.target.username.value,
+            password: event.target.password.value
+        }
+        const res = await api.auth.postUserRegister(requestData);
+        if (res === undefined) return setError(true)
+        history.push('sign-in')
+    };
 
 
   return (
