@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ILoginRequest, IRegisterRequest, IRegisterResponse, IUser } from "../interfaces/api";
+import { ILoginRequest, ILoginResponse, IRegisterRequest, IRegisterResponse, IUser } from "../interfaces/api";
+
 
 export const auth = {
     async postUserRegister(request_data: IRegisterRequest) {
@@ -15,8 +16,8 @@ export const auth = {
 
     async postUserLogin(request_data: ILoginRequest) {
         try {
-            const res = await axios.post<ILoginRequest>(
-                'http://0.0.0.0:8000/token', request_data
+            const res = await axios.post<ILoginResponse>(
+                'http://0.0.0.0:8000/token', request_data,
             );
             return res.data;
         } catch {

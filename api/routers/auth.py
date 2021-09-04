@@ -16,7 +16,6 @@ from api.db import get_db
 
 router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -32,8 +31,8 @@ async def register(
 # ログイン機能
 @router.post("/token", response_model=auth_schemas.Token)
 async def login_for_access_token(
-        db: AsyncSession = Depends(get_db),
-        form_data: OAuth2PasswordRequestForm = Depends()
+        form_data: auth_schemas.UserCreate,
+        db: AsyncSession = Depends(get_db)
 ):
     # DBから取得
     user = await auth_cruds.authenticate_user(
