@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 // import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { api } from './api/index';
+import { IImage } from './interfaces/api';
 
 // function App() {
 //   return (
@@ -18,16 +19,19 @@ import { api } from './api/index';
 
 function App() {
 
-  const [images, setImages] = useState([] as any[]);
+  const [images, setImages] = useState<IImage[] | []>([]);
 
   useEffect((): any => {
     async function fetchImages() {
-      const res = await api.getImagesAtRandom()
-      setImages(res)
-      return res;
+      const res = await api.image.getImagesAtRandom()
+      if (res === undefined) {
+        setImages([])
+      } else {
+        setImages(res)
+      }
     }
 
-      fetchImages()
+    fetchImages()
     }, []);
 
   return (
@@ -47,6 +51,9 @@ function App() {
         >
           Learn React
         </a>
+        <button>
+          fawfwaf
+        </button>
       </header>
     </div>
   );
