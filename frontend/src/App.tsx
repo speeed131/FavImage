@@ -21,16 +21,11 @@ function App() {
 
   const [images, setImages] = useState<IImage[] | []>([]);
 
-  useEffect((): any => {
+  useEffect((): void => {
     async function fetchImages() {
       const res = await api.image.getImagesAtRandom()
-      if (res === undefined) {
-        setImages([])
-      } else {
-        setImages(res)
-      }
+      res === undefined ? setImages([]) : setImages(res)
     }
-
     fetchImages()
     }, []);
 
