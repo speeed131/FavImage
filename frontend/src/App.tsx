@@ -8,6 +8,8 @@ import "./App.css";
 import { api } from "./api/index";
 import { IImage } from "./interfaces/api";
 
+// layouts components
+import Header from "layouts/Header"
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
@@ -16,6 +18,7 @@ import FavoritedImages from "pages/FavoritedImages";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
+    <Header></Header>
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/sign-up" component={SignUp} exact />

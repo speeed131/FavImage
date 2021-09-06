@@ -42,6 +42,7 @@ export default function Home() {
   useEffect((): void => {
     async function fetchImages() {
       const res = await api.fav.getFavoriteImages();
+      console.log(res)
       if (res === undefined) {
         setImages([]);
         history.push("/sign-in");
@@ -52,19 +53,6 @@ export default function Home() {
     fetchImages();
   }, []);
 
-  // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
-  const onClickFavoriteButton = async (item: IImage) => {
-    console.log(item);
-    // @TODO:バックエンド内部でcurrent_userからuser_idを取る方針にし、apiの叩く回数をへらす。
-    const user: IUser | undefined = await api.auth.getUserMe();
-    if (user === undefined) return console.log("cannnot read user");
-    const requestData = {
-      ...item,
-      user_id: user.id,
-    };
-    const res = await api.fav.postFavoriteImage(requestData);
-  };
-
   const toHome = () => {
     history.push("/");
   };
@@ -74,9 +62,6 @@ export default function Home() {
       {images.map((item) => (
         <div key={item.image_id}>
           <img src={item.webformat_url} alt={item.page_url}></img>
-          <IconButton onClick={() => onClickFavoriteButton(item)}>
-            <StarIcon className={classes.title} />
-          </IconButton>
         </div>
       ))}
       <Button variant="contained" color="primary" onClick={toHome}>
