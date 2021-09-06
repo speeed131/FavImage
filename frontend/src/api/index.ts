@@ -1,10 +1,9 @@
-import { auth } from "./auth"
-import { fav } from "./fav"
-import { image } from "./image"
-
+import { auth } from "./auth";
+import { fav } from "./fav";
+import { image } from "./image";
 
 export const api = {
-    auth,
-    fav,
-    image
-}
+  auth,
+  fav,
+  image,
+};

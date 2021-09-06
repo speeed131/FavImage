@@ -1,16 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import logo from './logo.svg';
-import './App.css';
+import Button from "@material-ui/core/Button";
+import logo from "./logo.svg";
+import "./App.css";
 // import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { api } from './api/index';
-import { IImage } from './interfaces/api';
-
+import { api } from "./api/index";
+import { IImage } from "./interfaces/api";
 
 import SignIn from "./pages/SignIn";
-import SignUp from './pages/SignUp';
+import SignUp from "./pages/SignUp";
 
 const App: React.FC = () => {
   return (
@@ -84,5 +83,3 @@ export default App;
 // }
 
 // export default App;
-
-
