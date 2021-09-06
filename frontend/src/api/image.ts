@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IImage } from "../interfaces/api";
 import { utils } from "utils";
+import { error } from "console";
 
 export const image = {
   async getImagesAtRandom() {
@@ -12,8 +13,8 @@ export const image = {
         },
       });
       return res.data;
-    } catch {
-      console.error("api error");
+    } catch(error) {
+        console.error("api error");
     }
   },
 };

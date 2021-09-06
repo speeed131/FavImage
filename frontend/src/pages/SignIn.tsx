@@ -50,8 +50,11 @@ export default function SignIn() {
       password: event.target.password.value,
     };
     const res = await api.auth.postUserLogin(requestData);
-    if (res === undefined) return setError(true);
-    history.push("/");
+    if (res === undefined) {
+      setError(true);
+    } else {
+      history.push("/");
+    }
   };
 
   return (

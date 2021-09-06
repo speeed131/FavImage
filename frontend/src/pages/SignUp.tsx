@@ -51,8 +51,11 @@ export default function SignUp() {
       password: event.target.password.value,
     };
     const res = await api.auth.postUserRegister(requestData);
-    if (res === undefined) return setError(true);
-    history.push("/");
+    if (res === undefined) {
+        setError(true);
+    } else {
+        history.push("/");
+    }
   };
 
   return (
