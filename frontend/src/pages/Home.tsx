@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { api } from "api/index";
-import { IImage } from "interfaces/api";
+import { IImage, IUser, IFavoriteImageResponse } from "interfaces/api";
 import { useHistory } from "react-router-dom";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
@@ -9,7 +9,7 @@ import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 import Container from "@material-ui/core/Container";
 
 export default function Home() {
@@ -40,14 +40,28 @@ export default function Home() {
   useEffect((): void => {
     async function fetchImages() {
       const res = await api.image.getImagesAtRandom();
-      res === undefined ? setImages([]) : setImages(res);
+      if (res === undefined) {
+        setImages([])
+        history.push('/sign-in')
+      } else {
+        setImages(res);
+      }
     }
     fetchImages();
   }, []);
 
   // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
-  const onClickFavoriteButton = async (item: any) => {
-    console.log(item)
+  const onClickFavoriteButton = async (item: IImage) => {
+    console.log(item);
+    // @TODO:バックエンド内部でcurrent_userからuser_idを取る方針にし、apiの叩く回数をへらす。
+    const user: IUser | undefined = await api.auth.getUserMe()
+    if (user === undefined) return console.log('cannnot read user')
+    const requestData = {
+        ...item,
+        user_id: user.id
+    }
+    const res = await api.fav.postFavoriteImage(requestData)
+    return console.log(res)
   }
 
   return (
@@ -57,7 +71,7 @@ export default function Home() {
             <div key={item.image_id}>
                 <img src={item.webformat_url}  alt={item.page_url}></img>
                 <IconButton onClick={() => onClickFavoriteButton(item)}>
-                    <StarBorderIcon className={classes.title} />
+                    <StarIcon className={classes.title} />
                 </IconButton>
             </div>
         ))}
@@ -73,7 +87,7 @@ export default function Home() {
               }}
               actionIcon={
                 <IconButton>
-                  <StarBorderIcon className={classes.title} />
+                  <StarIcon className={classes.title} />
                 </IconButton>
               }
             />

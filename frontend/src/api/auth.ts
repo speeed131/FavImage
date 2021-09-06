@@ -36,7 +36,13 @@ export const auth = {
 
   async getUserMe() {
     try {
-      const res = await axios.get<IUser>("http://0.0.0.0:8000/users/me");
+      const token: string | null = utils.getLocalToken();
+      const res = await axios.get<IUser>("http://0.0.0.0:8000/users/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch {
       console.error("api error");
