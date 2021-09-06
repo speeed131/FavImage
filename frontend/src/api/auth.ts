@@ -6,6 +6,7 @@ import {
   IRegisterResponse,
   IUser,
 } from "../interfaces/api";
+import { utils } from "utils";
 
 export const auth = {
   async postUserRegister(request_data: IRegisterRequest) {
@@ -26,6 +27,7 @@ export const auth = {
         "http://0.0.0.0:8000/token",
         request_data
       );
+      utils.saveLocalToken(res.data.access_token);
       return res.data;
     } catch {
       console.error("api error");

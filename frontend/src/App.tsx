@@ -10,11 +10,13 @@ import { IImage } from "./interfaces/api";
 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/" component={Home} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/sign-in" component={SignIn} exact />
       </Switch>

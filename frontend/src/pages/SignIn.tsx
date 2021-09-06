@@ -51,7 +51,7 @@ export default function SignIn() {
     };
     const res = await api.auth.postUserLogin(requestData);
     if (res === undefined) return setError(true);
-    history.push("sign-up");
+    history.push("/");
   };
 
   return (

@@ -1,103 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import ReactDOM from "react-dom";
 import { api } from "api/index";
+import { IImage } from "interfaces/api";
+import { useHistory } from "react-router-dom";
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import ImageList from "@material-ui/core/ImageList";
+import ImageListItem from "@material-ui/core/ImageListItem";
 import Container from "@material-ui/core/Container";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+export default function Home() {
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        overflow: "hidden",
+        backgroundColor: theme.palette.background.paper,
+      },
+      imageList: {
+        width: 600,
+        height: 600,
+      },
+    })
+  );
 
-export default function SignIn() {
   const classes = useStyles();
-  const [error, setError] = useState(false);
-
   const history = useHistory();
 
-  // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const requestData = {
-      username: event.target.username.value,
-      password: event.target.password.value,
-    };
-    const res = await api.auth.postUserLogin(requestData);
-    if (res === undefined) return setError(true);
-    history.push("sign-up");
-  };
+  const [images, setImages] = useState<IImage[] | []>([]);
+
+  useEffect((): void => {
+    async function fetchImages() {
+      const res = await api.image.getImagesAtRandom();
+      res === undefined ? setImages([]) : setImages(res);
+    }
+    fetchImages();
+  }, []);
 
   return (
+    // <div className={classes.root}>
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-        </form>
-      </div>
+      <ImageList rowHeight={160} className={classes.imageList} cols={3}>
+        {images.map((item: IImage) => (
+          <ImageListItem key={item.webformat_url} cols={3}>
+            <img src={item.webformat_url} alt={item.page_url} />
+          </ImageListItem>
+        ))}
+      </ImageList>
     </Container>
+    // </div>
   );
 }

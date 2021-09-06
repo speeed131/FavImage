@@ -1,13 +1,18 @@
 from typing import Any, List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 import api.schemas.images as images_schema
 import api.cruds.images as images_cruds
+import api.schemas.auth as auth_schemas
+import api.cruds.auth as auth_cruds
+
 
 router = APIRouter()
 
 @router.get("/images", response_model=List[images_schema.Image])
-def get_images_at_random():
+def get_images_at_random(
+    current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)
+):
     # [バックエンド] 画像をランダムに10枚取得する
     return images_cruds.fetch_images_from_pixabay()
 
