@@ -15,6 +15,7 @@ export const auth = {
         "http://0.0.0.0:8000/register",
         request_data
       );
+      utils.saveLocalToken(res.data.access_token);
       return res.data;
     } catch {
       console.error("api error");
@@ -37,8 +38,7 @@ export const auth = {
   async getUserMe() {
     try {
       const token: string | null = utils.getLocalToken();
-      const res = await axios.get<IUser>("http://0.0.0.0:8000/users/me",
-      {
+      const res = await axios.get<IUser>("http://0.0.0.0:8000/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

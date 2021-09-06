@@ -6,7 +6,8 @@ export interface IRegisterRequest {
 }
 
 export interface IRegisterResponse {
-  id: number;
+  access_token: string;
+  token_type: string;
 }
 
 export interface ILoginRequest {

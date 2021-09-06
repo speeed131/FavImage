@@ -52,9 +52,9 @@ export default function SignUp() {
     };
     const res = await api.auth.postUserRegister(requestData);
     if (res === undefined) {
-        setError(true);
+      setError(true);
     } else {
-        history.push("/");
+      history.push("/");
     }
   };
 

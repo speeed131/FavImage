@@ -13,8 +13,8 @@ export const image = {
         },
       });
       return res.data;
-    } catch(error) {
-        console.error("api error");
+    } catch (error) {
+      console.error("api error");
     }
   },
 };

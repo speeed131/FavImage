@@ -19,14 +19,18 @@ router = APIRouter()
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-@router.post("/register", response_model=auth_schemas.UserResponse)
+@router.post("/register", response_model=auth_schemas.Token)
 async def register(
     register_data: auth_schemas.UserCreate,
     db: AsyncSession = Depends(get_db)
 ):
     # [バックエンド] ユーザー登録できる
     user = await auth_cruds.create_user(db, register_data)
-    return user
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth_cruds.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
 # ログイン機能
 @router.post("/token", response_model=auth_schemas.Token)

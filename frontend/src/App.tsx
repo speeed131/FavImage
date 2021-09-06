@@ -11,6 +11,7 @@ import { IImage } from "./interfaces/api";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
+import FavoritedImages from "pages/FavoritedImages";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/" component={Home} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/sign-in" component={SignIn} exact />
+        <Route path="/favorite/images" component={FavoritedImages} exact />
       </Switch>
     </BrowserRouter>
   );

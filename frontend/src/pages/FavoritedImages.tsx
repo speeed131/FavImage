@@ -10,12 +10,20 @@ import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+
 import StarIcon from "@material-ui/icons/Star";
 import Container from "@material-ui/core/Container";
 
 export default function Home() {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+      imageList: {
+        flexWrap: "nowrap",
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        width: 500,
+        height: 500,
+        transform: "translateZ(0)",
+      },
       title: {
         color: theme.palette.primary.light,
       },
@@ -33,7 +41,7 @@ export default function Home() {
 
   useEffect((): void => {
     async function fetchImages() {
-      const res = await api.image.getImagesAtRandom();
+      const res = await api.fav.getFavoriteImages();
       if (res === undefined) {
         setImages([]);
         history.push("/sign-in");
@@ -46,6 +54,7 @@ export default function Home() {
 
   // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
   const onClickFavoriteButton = async (item: IImage) => {
+    console.log(item);
     // @TODO:バックエンド内部でcurrent_userからuser_idを取る方針にし、apiの叩く回数をへらす。
     const user: IUser | undefined = await api.auth.getUserMe();
     if (user === undefined) return console.log("cannnot read user");
@@ -56,12 +65,11 @@ export default function Home() {
     const res = await api.fav.postFavoriteImage(requestData);
   };
 
-  const toFavoritedImages = () => {
-    history.push("/favorite/images");
+  const toHome = () => {
+    history.push("/");
   };
 
   return (
-    // <div className={classes.root}>
     <Container component="main">
       {images.map((item) => (
         <div key={item.image_id}>
@@ -71,10 +79,9 @@ export default function Home() {
           </IconButton>
         </div>
       ))}
-      <Button variant="contained" color="primary" onClick={toFavoritedImages}>
-        お気に入りの画像一覧
+      <Button variant="contained" color="primary" onClick={toHome}>
+        お気に入り画像を見つけに行く
       </Button>
     </Container>
-    // </div>
   );
 }
