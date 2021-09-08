@@ -4,7 +4,6 @@ import { api } from "api/index";
 import { IImage, IUser, IFavoriteImageResponse } from "interfaces/api";
 import { useHistory } from "react-router-dom";
 
-
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";

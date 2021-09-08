@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import React, { useState, useEffect } from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 import { api } from "api/index";
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,12 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     headerSectionRight: {
-        display: "flex",
+      display: "flex",
     },
     headerSectionRightSignup: {
-        paddingRight: theme.spacing(2)
-    }
-  }),
+      paddingRight: theme.spacing(2),
+    },
+  })
 );
 
 export default function MenuAppBar() {
@@ -41,14 +40,14 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-    //@FIXME: レイアウトの中でapi呼ぶのよくなさそう。
+  //@FIXME: レイアウトの中でapi呼ぶのよくなさそう。
   useEffect((): void => {
     async function isLoggedIn() {
-        const res = await api.auth.getUserMe()
-        res === undefined ? setAuth(false) : setAuth(true)
+      const res = await api.auth.getUserMe();
+      res === undefined ? setAuth(false) : setAuth(true);
     }
     isLoggedIn();
-  }, [])
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -84,13 +83,13 @@ export default function MenuAppBar() {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={open}
                 onClose={handleClose}
@@ -99,18 +98,17 @@ export default function MenuAppBar() {
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
-          ) :
-          (
+          ) : (
             <div className={classes.headerSectionRight}>
-                <Typography variant="button" className={classes.headerSectionRightSignup}>
-                    SignUp
-                </Typography>
-                <Typography variant="button">
-                    Login
-                </Typography>
+              <Typography
+                variant="button"
+                className={classes.headerSectionRightSignup}
+              >
+                SignUp
+              </Typography>
+              <Typography variant="button">Login</Typography>
             </div>
-          )
-          }
+          )}
         </Toolbar>
       </AppBar>
     </div>

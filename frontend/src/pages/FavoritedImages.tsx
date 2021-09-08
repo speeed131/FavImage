@@ -42,7 +42,7 @@ export default function Home() {
   useEffect((): void => {
     async function fetchImages() {
       const res = await api.fav.getFavoriteImages();
-      console.log(res)
+      console.log(res);
       if (res === undefined) {
         setImages([]);
         history.push("/sign-in");
