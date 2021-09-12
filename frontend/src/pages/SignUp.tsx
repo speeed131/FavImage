@@ -58,6 +58,14 @@ export default function SignUp() {
     }
   };
 
+  useEffect((): void => {
+    async function isLoggedIn() {
+      const res = await api.auth.getUserMe();
+      if (res !== undefined) history.push("/");
+    }
+    isLoggedIn();
+  }, []);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function MenuAppBar() {
   const history = useHistory();
+  const location = useLocation()
   const classes = useStyles();
   const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -56,7 +57,7 @@ export default function MenuAppBar() {
       res === undefined ? setAuth(false) : setAuth(true);
     }
     isLoggedIn();
-  }, [history]);
+  }, [location]);
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +76,10 @@ export default function MenuAppBar() {
     history.push("/sign-in")
   }
 
+  const toMoveHome = () => {
+    history.push("/")
+  }
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -83,7 +88,7 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} onClick={toMoveHome}>
             FavImage
           </Typography>
           {auth ? (
