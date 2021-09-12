@@ -16,8 +16,12 @@ def get_images_at_random(
     # [バックエンド] 画像をランダムに10枚取得する
     return images_cruds.fetch_images_from_pixabay()
 
-@router.get("/images/{image_id}", response_model=images_schema.Image)
-def get_image_detail():
+@router.get("/images/{image_id}", response_model=List[images_schema.Image])
+def get_image_detail(
+    image_id: int,
+    current_user: auth_schemas.User = Depends(auth_cruds.get_current_user)
+):
+    return images_cruds.fetch_image_data_by_image_id(image_id)
     # [バックエンド] 画像の詳しい情報を取得できる
     
     # １,画像をapiを使って取得する

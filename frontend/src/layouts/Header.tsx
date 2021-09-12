@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Switch from "@material-ui/core/Switch";
@@ -29,12 +33,16 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
     },
     headerSectionRightSignup: {
-      paddingRight: theme.spacing(2),
+      marginRight: theme.spacing(2),
     },
+    headerButton: {
+      cursor: "pointer"
+    }
   })
 );
 
 export default function MenuAppBar() {
+  const history = useHistory();
   const classes = useStyles();
   const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -44,10 +52,12 @@ export default function MenuAppBar() {
   useEffect((): void => {
     async function isLoggedIn() {
       const res = await api.auth.getUserMe();
+      // console.log(res)
       res === undefined ? setAuth(false) : setAuth(true);
     }
     isLoggedIn();
-  }, []);
+  }, [history]);
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -56,6 +66,14 @@ export default function MenuAppBar() {
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const toMoveSignUp = () => {
+    history.push("/sign-up")
+  }
+
+  const toMoveSignIn = () => {
+    history.push("/sign-in")
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -100,13 +118,16 @@ export default function MenuAppBar() {
             </div>
           ) : (
             <div className={classes.headerSectionRight}>
-              <Typography
+              <Typography 
+                variant="button" 
+                className={[ classes.headerSectionRightSignup, classes.headerButton].join(" ")}
+                onClick={toMoveSignUp}
+                >SignUp</Typography>
+              <Typography 
                 variant="button"
-                className={classes.headerSectionRightSignup}
-              >
-                SignUp
-              </Typography>
-              <Typography variant="button">Login</Typography>
+                className={classes.headerButton}
+                onClick={toMoveSignIn}
+              >SignIn</Typography>
             </div>
           )}
         </Toolbar>

@@ -8,6 +8,7 @@ import api.cruds.auth as auth_cruds
 import api.models.model as model
 import api.schemas.fav as fav_schemas
 import api.schemas.auth as auth_schemas
+import api.schemas.images as images_schemas
 
 
 import api.settings as settings
@@ -34,6 +35,7 @@ async def read_favorite_images_by_user(
         select(model.FavoriteImage).filter(model.FavoriteImage.user_id == user_id)
         )
     favorite_images = result.all()
+    favorite_images["FavoriteImage"]
     return make_response_data(favorite_images, "FavoriteImage")
 
 
