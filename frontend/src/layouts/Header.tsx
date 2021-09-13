@@ -17,6 +17,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
 import { api } from "api/index";
+import { utils } from "utils"
+import { util } from "prettier";
+import { updateTypeLiteralNode } from "typescript";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,11 +87,16 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    utils.removeLocalToken();
+    history.push("/sign-in")
+  }
+
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" className={classes.title} onClick={toMoveHome}>
+          <Typography variant="h5" className={classes.title} onClick={toMoveHome}>
             FavImage
           </Typography>
           {auth ? (
@@ -99,8 +107,9 @@ export default function MenuAppBar() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
+                size="medium"
               >
-                <AccountCircle />
+                <AccountCircle fontSize="medium" />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -117,8 +126,7 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           ) : (
