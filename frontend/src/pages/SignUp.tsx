@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: "#cddc39"
+    backgroundColor: "#cddc39",
   },
 }));
 
@@ -75,7 +75,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        新規登録
+          新規登録
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -109,8 +109,7 @@ export default function SignUp() {
             variant="contained"
             className={classes.submit}
           >
-          新規登録
-
+            新規登録
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

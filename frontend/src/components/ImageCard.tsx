@@ -66,15 +66,17 @@ export default function ImageCard(props: any) {
         <Card className={classes.card} key={index}>
           <CardMedia className={classes.media} image={item.large_image_url} />
           <CardActions className={classes.cardActions}>
-            <IconButton aria-label="not favorited">
-              <CloseIcon fontSize="large" onClick={() => removeImage(index)} />
+            <IconButton
+              aria-label="not favorited"
+              onClick={() => removeImage(index)}
+            >
+              <CloseIcon fontSize="large" />
             </IconButton>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon
-                fontSize="large"
-                style={{ color: "#cddc39" }}
-                onClick={() => favoriteImage(item, index)}
-              />
+            <IconButton
+              aria-label="add to favorites"
+              onClick={() => favoriteImage(item, index)}
+            >
+              <FavoriteIcon fontSize="large" style={{ color: "#cddc39" }} />
             </IconButton>
           </CardActions>
         </Card>
