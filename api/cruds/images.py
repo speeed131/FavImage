@@ -27,7 +27,7 @@ def fetch_images_from_pixabay():
     # 12738でmusicが一番少なそう
     # 13257でeductation
 
-    payload = {"key": API_KEY, "q": "", "per_page": 10, "page": page, "category": ""}
+    payload = {"key": API_KEY, "q": "", "per_page": 10, "page": page, "min_width": 640}
 
     try:
         data: images_schema.ImagesResponseForApi = requests.get(url, params=payload).json()

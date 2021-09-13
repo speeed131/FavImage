@@ -15,24 +15,7 @@ import StarIcon from "@material-ui/icons/Star";
 import Container from "@material-ui/core/Container";
 
 export default function Home() {
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      imageList: {
-        flexWrap: "nowrap",
-        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-        width: 500,
-        height: 500,
-        transform: "translateZ(0)",
-      },
-      title: {
-        color: theme.palette.primary.light,
-      },
-      titleBar: {
-        background:
-          "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-      },
-    })
-  );
+  const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
   const classes = useStyles();
   const history = useHistory();
@@ -61,7 +44,7 @@ export default function Home() {
     <Container component="main">
       {images.map((item) => (
         <div key={item.image_id}>
-          <img src={item.webformat_url} alt={item.page_url}></img>
+          <img src={item.large_image_url} alt={item.page_url}></img>
         </div>
       ))}
       <Button variant="contained" color="primary" onClick={toHome}>

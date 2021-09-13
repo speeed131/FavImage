@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import ReactDOM from "react-dom";
 import { api } from "api/index";
 import { IImage, IUser, IFavoriteImageResponse } from "interfaces/api";
 import { useHistory } from "react-router-dom";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import ImageList from "@material-ui/core/ImageList";
-import ImageListItem from "@material-ui/core/ImageListItem";
-import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-import StarIcon from "@material-ui/icons/Star";
+
 import Container from "@material-ui/core/Container";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import { TransitionProps } from "@material-ui/core/transitions";
+
+// component
+import ImageCard from "components/ImageCard";
+
+// export const ImagesContext = createContext();
 
 export default function Home() {
   const useStyles = makeStyles((theme: Theme) =>
@@ -26,8 +35,25 @@ export default function Home() {
     })
   );
 
+  const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    ref: React.Ref<unknown>
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
   const classes = useStyles();
   const history = useHistory();
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [images, setImages] = useState<IImage[] | []>([]);
 
@@ -44,6 +70,14 @@ export default function Home() {
     fetchImages();
   }, []);
 
+  const removeCard = (index: number) => {
+    setImages(
+      images.filter((item, itemIndex) => {
+        return index !== itemIndex;
+      })
+    );
+  };
+
   // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
   const onClickFavoriteButton = async (item: IImage) => {
     // @TODO:バックエンド内部でcurrent_userからuser_idを取る方針にし、apiの叩く回数をへらす。
@@ -56,25 +90,42 @@ export default function Home() {
     const res = await api.fav.postFavoriteImage(requestData);
   };
 
-  const toFavoritedImages = () => {
-    history.push("/favorite/images");
-  };
-
   return (
-    // <div className={classes.root}>
-    <Container component="main">
-      {images.map((item) => (
-        <div key={item.image_id}>
-          <img src={item.webformat_url} alt={item.page_url}></img>
-          <IconButton onClick={() => onClickFavoriteButton(item)}>
-            <StarIcon className={classes.title} />
-          </IconButton>
-        </div>
-      ))}
-      <Button variant="contained" color="primary" onClick={toFavoritedImages}>
-        お気に入りの画像一覧
-      </Button>
-    </Container>
-    // </div>
+    <div>
+      {images !== [] ? (
+        <ImageCard
+          images={images}
+          setImages={setImages}
+          onClickFavoriteButton={onClickFavoriteButton}
+        ></ImageCard>
+      ) : (
+        <Dialog
+          open={true}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Let Google help apps determine location. This means sending
+              anonymous location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </div>
   );
 }
