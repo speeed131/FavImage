@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,9 +16,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
 import { api } from "api/index";
-import { utils } from "utils"
+import { utils } from "utils";
 import { util } from "prettier";
-import { updateTypeLiteralNode } from "typescript";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,8 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
     menuButton: {
       marginRight: theme.spacing(2),
     },
-    title: {
+    headerTitle: {
       flexGrow: 1,
+      cursor: "pointer",
     },
     headerSectionRight: {
       display: "flex",
@@ -39,14 +38,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     headerButton: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   })
 );
 
 export default function MenuAppBar() {
   const history = useHistory();
-  const location = useLocation()
+  const location = useLocation();
   const classes = useStyles();
   const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -56,12 +55,10 @@ export default function MenuAppBar() {
   useEffect((): void => {
     async function isLoggedIn() {
       const res = await api.auth.getUserMe();
-      // console.log(res)
       res === undefined ? setAuth(false) : setAuth(true);
     }
     isLoggedIn();
   }, [location]);
-
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -72,16 +69,16 @@ export default function MenuAppBar() {
   };
 
   const toMoveSignUp = () => {
-    history.push("/sign-up")
-  }
+    history.push("/sign-up");
+  };
 
   const toMoveSignIn = () => {
-    history.push("/sign-in")
-  }
+    history.push("/sign-in");
+  };
 
   const toMoveHome = () => {
-    history.push("/")
-  }
+    history.push("/");
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -89,14 +86,19 @@ export default function MenuAppBar() {
 
   const handleLogout = () => {
     utils.removeLocalToken();
-    history.push("/sign-in")
-  }
+    handleClose();
+    history.push("/sign-in");
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h5" className={classes.title} onClick={toMoveHome}>
+          <Typography
+            variant="h5"
+            onClick={toMoveHome}
+            className={classes.headerTitle}
+          >
             FavImage
           </Typography>
           {auth ? (
@@ -131,16 +133,23 @@ export default function MenuAppBar() {
             </div>
           ) : (
             <div className={classes.headerSectionRight}>
-              <Typography 
-                variant="button" 
-                className={[ classes.headerSectionRightSignup, classes.headerButton].join(" ")}
+              <Typography
+                variant="button"
+                className={[
+                  classes.headerSectionRightSignup,
+                  classes.headerButton,
+                ].join(" ")}
                 onClick={toMoveSignUp}
-                >SignUp</Typography>
-              <Typography 
+              >
+                SignUp
+              </Typography>
+              <Typography
                 variant="button"
                 className={classes.headerButton}
                 onClick={toMoveSignIn}
-              >SignIn</Typography>
+              >
+                SignIn
+              </Typography>
             </div>
           )}
         </Toolbar>

@@ -6,17 +6,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid"
-
+import Grid from "@material-ui/core/Grid";
 
 //api
 import { api } from "./api/index";
 import { IImage } from "./interfaces/api";
 
-
 // layouts
 import Header from "layouts/Header";
-import ResponsiveDrawer from "layouts/SideBar"
+import SideBar from "layouts/SideBar";
 
 // page
 import SignIn from "./pages/SignIn";
@@ -24,46 +22,44 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import FavoritedImages from "pages/FavoritedImages";
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  main: {
+    display: "flex",
+  },
+}));
+
 const App: React.FC = () => {
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: "100%", // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-    main: {
-      marginLeft: "240px"
-    }
-  }));
-  
+  const classes = useStyles();
+
   return (
     <BrowserRouter>
-          <Header></Header>
-          <Grid container>
-            <Grid item lg={1}>
-              <ResponsiveDrawer></ResponsiveDrawer>
-            </Grid>
-            <Grid item lg={11}>
-              <Switch>
-                <Route path="/" component={Home} exact />
-                <Route path="/sign-up" component={SignUp} exact />
-                <Route path="/sign-in" component={SignIn} exact />
-                <Route path="/favorite/images" component={FavoritedImages} exact />
-              </Switch>
-            </Grid>
-          </Grid>
+      <Header></Header>
+      <div className={classes.main}>
+        <SideBar />
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/sign-up" component={SignUp} exact />
+          <Route path="/sign-in" component={SignIn} exact />
+          <Route path="/favorite/images" component={FavoritedImages} exact />
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 };

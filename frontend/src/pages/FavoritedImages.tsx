@@ -45,7 +45,7 @@ export default function Home() {
       console.log(res);
       if (res === undefined) {
         setImages([]);
-        history.push("/sign-in");
+
       } else {
         setImages(res);
       }
