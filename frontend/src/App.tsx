@@ -7,7 +7,7 @@ import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import pink from '@material-ui/core/colors/pink';
+import pink from "@material-ui/core/colors/pink";
 
 //api
 import { api } from "./api/index";
@@ -26,12 +26,14 @@ import FavoritedImages from "pages/FavoritedImages";
 const useStyles = makeStyles((theme) => ({
   main: {
     width: "100%",
-    marginTop: 64
+    marginTop: 64,
   },
   mainContent: {
+    marginTop: 24,
+  },
+  mainContentWithSideBar: {
     marginLeft: 240,
-    marginTop: 24
-  }
+  },
 }));
 
 const App: React.FC = () => {
@@ -45,15 +47,19 @@ const App: React.FC = () => {
           <SideBar />
           <div className={classes.mainContent}>
             <Switch>
-              <Route path="/" component={Home} exact />
               <Route path="/sign-up" component={SignUp} exact />
               <Route path="/sign-in" component={SignIn} exact />
-              <Route path="/favorite/images" component={FavoritedImages} exact />
+              <div className={classes.mainContentWithSideBar}>
+                <Route path="/" component={Home} exact />
+                <Route
+                  path="/favorite/images"
+                  component={FavoritedImages}
+                  exact
+                />
+              </div>
             </Switch>
-
           </div>
         </div>
-
       </Container>
     </BrowserRouter>
   );

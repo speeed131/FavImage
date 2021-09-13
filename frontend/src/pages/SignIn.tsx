@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#cddc39"
   },
 }));
 
@@ -73,7 +74,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          ログイン
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
@@ -82,7 +83,7 @@ export default function SignIn() {
             required
             fullWidth
             id="username"
-            label="Username"
+            label="ユーザーネーム"
             name="username"
             autoComplete="username"
             autoFocus
@@ -93,7 +94,7 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="パスワード"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -102,10 +103,9 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
-            Sign In
+            ログイン
           </Button>
         </form>
       </div>

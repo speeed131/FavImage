@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#cddc39"
   },
 }));
 
@@ -74,7 +75,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+        新規登録
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -84,7 +85,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label="ユーザーネーム"
                 name="username"
                 autoComplete="username"
               />
@@ -95,7 +96,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="パスワード"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -106,15 +107,15 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
-            Sign Up
+          新規登録
+
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/sign-in" variant="body2">
-                Already have an account? Sign in
+                既に登録されている方はこちらから
               </Link>
             </Grid>
           </Grid>

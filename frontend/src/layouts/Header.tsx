@@ -14,8 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import pink from '@material-ui/core/colors/pink';
-
+import pink from "@material-ui/core/colors/pink";
 
 import { api } from "api/index";
 import { utils } from "utils";
@@ -27,8 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     header: {
-      backgroundColor: "#cddc39"
-
+      backgroundColor: "#cddc39", //https://material-ui.com/customization/color/
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -36,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     headerTitle: {
       flexGrow: 1,
       cursor: "pointer",
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     headerSectionRight: {
       display: "flex",
@@ -46,6 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     headerButton: {
       cursor: "pointer",
+      fontWeight: 600,
+      // color: "rgba(0, 0, 0, 0.87)"
     },
   })
 );
@@ -148,14 +148,14 @@ export default function MenuAppBar() {
                 ].join(" ")}
                 onClick={toMoveSignUp}
               >
-                SignUp
+                新規登録
               </Typography>
               <Typography
                 variant="button"
                 className={classes.headerButton}
                 onClick={toMoveSignIn}
               >
-                SignIn
+                ログイン
               </Typography>
             </div>
           )}

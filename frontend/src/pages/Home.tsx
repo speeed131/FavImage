@@ -7,9 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-import pink from '@material-ui/core/colors/pink';
-
-
+import pink from "@material-ui/core/colors/pink";
 
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -35,11 +33,11 @@ export default function Home() {
         // marginTop: 48
       },
       homeTitle: {
-        fontWeight: "bold"
+        fontWeight: "bold",
       },
       homeCard: {
-        marginLeft: "15%"
-      }
+        marginLeft: "15%",
+      },
     })
   );
 
@@ -107,40 +105,41 @@ export default function Home() {
             画像を見つける
       </Typography> */}
       <div className={classes.homeCard}>
-      {images !== [] ? (
-        <ImageCard
-          images={images}
-          setImages={setImages}
-          onClickFavoriteButton={onClickFavoriteButton}
-        ></ImageCard>
-      ) : (
-        <Dialog
-          open={true}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Use Google's location service?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+        {images !== [] ? (
+          <ImageCard
+            images={images}
+            setImages={setImages}
+            onClickFavoriteButton={onClickFavoriteButton}
+          ></ImageCard>
+        ) : (
+          <Dialog
+            open={true}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">
+              {"Use Google's location service?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Let Google help apps determine location. This means sending
+                anonymous location data to Google, even when no apps are
+                running.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Disagree
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                Agree
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
       </div>
     </div>
   );

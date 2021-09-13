@@ -13,12 +13,11 @@ import Button from "@material-ui/core/Button";
 
 import StarIcon from "@material-ui/icons/Star";
 import Container from "@material-ui/core/Container";
-import ListSubheader from '@material-ui/core/ListSubheader';
-import InfoIcon from '@material-ui/icons/Info';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import ListSubheader from "@material-ui/core/ListSubheader";
+import InfoIcon from "@material-ui/icons/Info";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 export default function Home() {
-
   const history = useHistory();
 
   const [images, setImages] = useState<IImage[] | []>([]);
@@ -42,30 +41,29 @@ export default function Home() {
   };
 
   const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
-    },
-    imageList: {
-      width: 640,
-      height: 470,
-    },
-    icon: {
-      color: 'rgba(255, 255, 255, 0.54)',
-    },
-  }),
+    createStyles({
+      root: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        overflow: "hidden",
+        backgroundColor: theme.palette.background.paper,
+      },
+      imageList: {
+        width: 640,
+        height: 470,
+      },
+      icon: {
+        color: "rgba(255, 255, 255, 0.54)",
+      },
+    })
   );
 
   const classes = useStyles();
 
-  const toMoveDownloadPage  = (pageUrl: string) => {
-    window.open(pageUrl, '_blank');
-  }
-
+  const toMoveDownloadPage = (pageUrl: string) => {
+    window.open(pageUrl, "_blank");
+  };
 
   return (
     <div className={classes.root}>
@@ -75,10 +73,12 @@ export default function Home() {
             <img src={item.large_image_url} alt={item.page_url} />
             <ImageListItemBar
               actionIcon={
-                <IconButton aria-label={`info about ${item.page_url}`} className={classes.icon}
-                onClick={() => toMoveDownloadPage(item.page_url)}
+                <IconButton
+                  aria-label={`info about ${item.page_url}`}
+                  className={classes.icon}
+                  onClick={() => toMoveDownloadPage(item.page_url)}
                 >
-                  <GetAppIcon  style={{ color: "#cddc39" }} />
+                  <GetAppIcon style={{ color: "#cddc39" }} />
                 </IconButton>
               }
             />

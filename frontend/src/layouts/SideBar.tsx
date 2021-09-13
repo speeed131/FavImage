@@ -119,7 +119,11 @@ export default function SideBar(props: Props) {
         {sideBarMenu.map((item, index) => (
           <ListItem button key={item.value} onClick={item.action}>
             <ListItemIcon>
-              {index % 2 === 0 ? <ImageSearchIcon color="primary"/> : <FavoriteIcon  style={{ color: "#cddc39" }} />}
+              {index % 2 === 0 ? (
+                <ImageSearchIcon color="primary" />
+              ) : (
+                <FavoriteIcon style={{ color: "#cddc39" }} />
+              )}
             </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
