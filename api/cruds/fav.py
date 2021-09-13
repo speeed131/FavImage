@@ -35,7 +35,6 @@ async def read_favorite_images_by_user(
         select(model.FavoriteImage).filter(model.FavoriteImage.user_id == user_id)
         )
     favorite_images = result.all()
-    favorite_images["FavoriteImage"]
     return make_response_data(favorite_images, "FavoriteImage")
 
 
