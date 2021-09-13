@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
     headerTitle: {
       flexGrow: 1,
       cursor: "pointer",
+      fontWeight: "bold"
     },
     headerSectionRight: {
       display: "flex",
