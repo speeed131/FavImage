@@ -14,6 +14,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import pink from '@material-ui/core/colors/pink';
+
 
 import { api } from "api/index";
 import { utils } from "utils";
@@ -23,6 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+    },
+    header: {
+      backgroundColor: "#cddc39"
+
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -92,7 +98,7 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.header}>
         <Toolbar>
           <Typography
             variant="h5"

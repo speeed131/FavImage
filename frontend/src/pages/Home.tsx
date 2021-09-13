@@ -7,8 +7,12 @@ import { useHistory } from "react-router-dom";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import pink from '@material-ui/core/colors/pink';
+
+
 
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -25,13 +29,17 @@ import ImageCard from "components/ImageCard";
 export default function Home() {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-      title: {
-        color: theme.palette.primary.light,
+      home: {
+        width: "100%",
+        // marginLeft: ,
+        // marginTop: 48
       },
-      titleBar: {
-        background:
-          "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+      homeTitle: {
+        fontWeight: "bold"
       },
+      homeCard: {
+        marginLeft: "15%"
+      }
     })
   );
 
@@ -91,7 +99,14 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className={classes.home}>
+      {/* <Typography
+            variant="h5"
+            className={classes.homeTitle}
+      >
+            画像を見つける
+      </Typography> */}
+      <div className={classes.homeCard}>
       {images !== [] ? (
         <ImageCard
           images={images}
@@ -126,6 +141,7 @@ export default function Home() {
           </DialogActions>
         </Dialog>
       )}
+      </div>
     </div>
   );
 }

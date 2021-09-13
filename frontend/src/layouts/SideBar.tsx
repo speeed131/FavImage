@@ -59,10 +59,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       top: "64px",
     },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
   })
 );
 
@@ -123,7 +119,7 @@ export default function SideBar(props: Props) {
         {sideBarMenu.map((item, index) => (
           <ListItem button key={item.value} onClick={item.action}>
             <ListItemIcon>
-              {index % 2 === 0 ? <ImageSearchIcon /> : <FavoriteIcon />}
+              {index % 2 === 0 ? <ImageSearchIcon color="primary"/> : <FavoriteIcon  style={{ color: "#cddc39" }} />}
             </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
@@ -170,7 +166,6 @@ export default function SideBar(props: Props) {
               </Drawer>
             </Hidden>
           </nav>
-          <main className={classes.content}></main>
         </>
       )}
     </div>
