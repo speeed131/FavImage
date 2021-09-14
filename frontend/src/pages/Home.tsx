@@ -51,17 +51,9 @@ export default function Home() {
   const classes = useStyles();
   const history = useHistory();
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [images, setImages] = useState<IImage[] | []>([]);
+  
 
   useEffect((): void => {
     async function fetchImages() {
@@ -76,13 +68,6 @@ export default function Home() {
     fetchImages();
   }, []);
 
-  const removeCard = (index: number) => {
-    setImages(
-      images.filter((item, itemIndex) => {
-        return index !== itemIndex;
-      })
-    );
-  };
 
   // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
   const onClickFavoriteButton = async (item: IImage) => {
@@ -105,41 +90,12 @@ export default function Home() {
             画像を見つける
       </Typography> */}
       <div className={classes.homeCard}>
-        {images !== [] ? (
           <ImageCard
             images={images}
             setImages={setImages}
             onClickFavoriteButton={onClickFavoriteButton}
           ></ImageCard>
-        ) : (
-          <Dialog
-            open={true}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">
-              {"Use Google's location service?"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                Let Google help apps determine location. This means sending
-                anonymous location data to Google, even when no apps are
-                running.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Disagree
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                Agree
-              </Button>
-            </DialogActions>
-          </Dialog>
-        )}
+
       </div>
     </div>
   );
