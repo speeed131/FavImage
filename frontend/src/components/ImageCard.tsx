@@ -17,7 +17,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Button from "@material-ui/core/Button";
 
-
 import Container from "@material-ui/core/Container";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -56,8 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
-
 export default function ImageCard(props: any) {
   const classes = useStyles();
 
@@ -67,25 +64,24 @@ export default function ImageCard(props: any) {
   const [isEnableBeforeImagesButton, setIsEnableBeforeImagesButton] =
     useState<boolean>(false);
 
-    const Transition = React.forwardRef(function Transition(
-      props: TransitionProps & { children?: React.ReactElement<any, any> },
-      ref: React.Ref<unknown>
-    ) {
-      return <Slide direction="up" ref={ref} {...props} />;
-    });
-  
-    const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    ref: React.Ref<unknown>
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
-    const handleOpen = (images: IImage[] | []) => {
-      if (images === []) {
-        setIsOpenDialog(true);
-      }
-    };
-  
-    const handleClose = () => {
-      setIsOpenDialog(false);
-    };
-  
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
+  const handleOpen = (images: IImage[] | []) => {
+    if (images === []) {
+      setIsOpenDialog(true);
+    }
+  };
+
+  const handleClose = () => {
+    setIsOpenDialog(false);
+  };
 
   const removeImage = (index: number) => {
     setBeforeImages([...images]);
@@ -114,69 +110,69 @@ export default function ImageCard(props: any) {
 
   return (
     <div className={classes.root}>
-      {
-        isOpenDialog ? (
-          <Dialog
-                open={isOpenDialog}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  {"Use Google's location service?"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    Let Google help apps determine location. This means sending
-                    anonymous location data to Google, even when no apps are
-                    running.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose} color="primary">
-                    Disagree
-                  </Button>
-                  <Button onClick={handleClose} color="primary">
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-        ): (
-          <div>
-            {images.map((item: IImage, index) => (
-              <Card className={classes.card} key={index}>
-                <CardMedia className={classes.media} image={item.large_image_url} />
-                <CardActions className={classes.cardActions}>
-                  <IconButton
-                    aria-label="not favorited"
-                    onClick={() => removeImage(index)}
-                  >
-                    <CloseIcon fontSize="large" />
-                  </IconButton>
-                  <IconButton
-                    aria-label="add to favorites"
-                    onClick={() => favoriteImage(item, index)}
-                  >
-                    <FavoriteIcon fontSize="large" style={{ color: "#cddc39" }} />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            ))}
-            {isEnableBeforeImagesButton && (
-              <IconButton
-                className={classes.backButton}
-                onClick={() => backToBeforeImage()}
-                size="small"
-              >
-                <ArrowBackIcon fontSize="large" color="primary" />
-                前の画像に戻る
-              </IconButton>
-            )}
-          </div>
-        )
-      }
+      {isOpenDialog ? (
+        <Dialog
+          open={isOpenDialog}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Let Google help apps determine location. This means sending
+              anonymous location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : (
+        <div>
+          {images.map((item: IImage, index) => (
+            <Card className={classes.card} key={index}>
+              <CardMedia
+                className={classes.media}
+                image={item.large_image_url}
+              />
+              <CardActions className={classes.cardActions}>
+                <IconButton
+                  aria-label="not favorited"
+                  onClick={() => removeImage(index)}
+                >
+                  <CloseIcon fontSize="large" />
+                </IconButton>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => favoriteImage(item, index)}
+                >
+                  <FavoriteIcon fontSize="large" style={{ color: "#cddc39" }} />
+                </IconButton>
+              </CardActions>
+            </Card>
+          ))}
+          {isEnableBeforeImagesButton && (
+            <IconButton
+              className={classes.backButton}
+              onClick={() => backToBeforeImage()}
+              size="small"
+            >
+              <ArrowBackIcon fontSize="large" color="primary" />
+              前の画像に戻る
+            </IconButton>
+          )}
+        </div>
+      )}
     </div>
   );
 }

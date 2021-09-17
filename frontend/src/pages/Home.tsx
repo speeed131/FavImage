@@ -51,9 +51,7 @@ export default function Home() {
   const classes = useStyles();
   const history = useHistory();
 
-
   const [images, setImages] = useState<IImage[] | []>([]);
-  
 
   useEffect((): void => {
     async function fetchImages() {
@@ -67,7 +65,6 @@ export default function Home() {
     }
     fetchImages();
   }, []);
-
 
   // @TODO:Anyを適切な型にする target内の型を指定する良い方法があればいい。もしくは別で定義する？ https://zenn.dev/koduki/articles/0f8fcbc9a7485b
   const onClickFavoriteButton = async (item: IImage) => {
@@ -90,12 +87,11 @@ export default function Home() {
             画像を見つける
       </Typography> */}
       <div className={classes.homeCard}>
-          <ImageCard
-            images={images}
-            setImages={setImages}
-            onClickFavoriteButton={onClickFavoriteButton}
-          ></ImageCard>
-
+        <ImageCard
+          images={images}
+          setImages={setImages}
+          onClickFavoriteButton={onClickFavoriteButton}
+        ></ImageCard>
       </div>
     </div>
   );
