@@ -91,6 +91,7 @@ export default function Home() {
           images={images}
           setImages={setImages}
           onClickFavoriteButton={onClickFavoriteButton}
+          history={history}
         ></ImageCard>
       </div>
     </div>

@@ -10,6 +10,8 @@ import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
 
 import StarIcon from "@material-ui/icons/Star";
 import Container from "@material-ui/core/Container";
@@ -68,6 +70,13 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <ImageList rowHeight={470} cols={1} className={classes.imageList}>
+        { images.length === 0 && (
+          <Typography
+            variant="h6"
+          >
+            まだお気に入り登録した画像はありません。
+            </Typography>
+        )}
         {images.map((item) => (
           <ImageListItem key={item.image_id}>
             <img src={item.large_image_url} alt={item.page_url} />

@@ -28,6 +28,7 @@ import { TransitionProps } from "@material-ui/core/transitions";
 
 //interfaces
 import { IImage, IUser, IFavoriteImageResponse } from "interfaces/api";
+import { StayPrimaryLandscapeOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,10 +53,24 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 550,
       left: 0,
     },
+    dialog: {
+      minHeight: 470,
+    },
+    dialogTitle: {
+      textAlign: "center",
+      paddingTop: 16,
+      paddingBottom: 48
+    },
+    dialogActions: {
+      display: "flex",
+      justifyContent: "space-around"
+
+    },
   })
 );
 
 export default function ImageCard(props: any) {
+  //@TODO: ダイアログを別コンポーネントに移動し、home.tsxでまとめる
   const classes = useStyles();
 
   const images: IImage[] = props.images;
@@ -108,6 +123,14 @@ export default function ImageCard(props: any) {
     setIsEnableBeforeImagesButton(false);
   };
 
+  const toMoveHome = () => {
+    props.history.go(0)
+  };
+
+  const toMoveFavorite = () => {
+    props.history.push("/favorite/images");
+  }
+
   return (
     <div className={classes.root}>
       {isOpenDialog ? (
@@ -115,25 +138,20 @@ export default function ImageCard(props: any) {
           open={isOpenDialog}
           TransitionComponent={Transition}
           keepMounted
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
+          aria-labelledby="dialog"
+          fullWidth={true}
+          max-width="lg"
+          className={classes.dialog}
         >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Use Google's location service?"}
+          <DialogTitle className={classes.dialogTitle}>
+            お気に入りの画像は見つかりましたか？
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Disagree
+          <DialogActions className={classes.dialogActions}>
+            <Button onClick={toMoveFavorite} style={{ backgroundColor: "#cddc39", color: "white", fontWeight:"bold" }}>
+              はい、お気に入りした画像を見る
             </Button>
-            <Button onClick={handleClose} color="primary">
-              Agree
+            <Button onClick={toMoveHome} color="inherit">
+              いいえ、まだ探す
             </Button>
           </DialogActions>
         </Dialog>
