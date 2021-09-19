@@ -1,3 +1,4 @@
+
 # .env ファイルをロードして環境変数へ反映
 from dotenv import load_dotenv
 load_dotenv()
