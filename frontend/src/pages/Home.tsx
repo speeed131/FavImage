@@ -1,27 +1,16 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from "react";
 import { api } from "api/index";
-import { IImage, IUser, IFavoriteImageResponse } from "interfaces/api";
+import { IImage, IUser } from "interfaces/api";
 import { useHistory } from "react-router-dom";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import pink from "@material-ui/core/colors/pink";
 
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 
 // component
 import ImageCard from "components/ImageCard";
-import EmptyImagesDialog from "components/EmptyImagesDialog"
+import EmptyImagesDialog from "components/EmptyImagesDialog";
 
 // export const ImagesContext = createContext();
 
@@ -55,7 +44,6 @@ export default function Home() {
   const [images, setImages] = useState<IImage[] | []>([]);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
-
   useEffect((): void => {
     async function fetchImages() {
       const res = await api.image.getImagesAtRandom();
@@ -83,10 +71,7 @@ export default function Home() {
 
   return (
     <div className={classes.home}>
-      <EmptyImagesDialog
-        history={history}
-        isOpenDialog={isOpenDialog}
-      />
+      <EmptyImagesDialog history={history} isOpenDialog={isOpenDialog} />
       <div className={classes.homeCard}>
         <ImageCard
           images={images}

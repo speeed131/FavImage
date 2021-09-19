@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import logo from "./logo.svg";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import pink from "@material-ui/core/colors/pink";
 
 //api
-import { api } from "./api/index";
-import { IImage } from "./interfaces/api";
 
 // layouts
 import Header from "layouts/Header";
