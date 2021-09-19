@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function ImageCard(props: any) {
-  //@TODO: ダイアログを別コンポーネントに移動し、home.tsxでまとめる
   const classes = useStyles();
 
   const images: IImage[] = props.images;
@@ -79,24 +78,6 @@ export default function ImageCard(props: any) {
   const [isEnableBeforeImagesButton, setIsEnableBeforeImagesButton] =
     useState<boolean>(false);
 
-  const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>
-  ) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
-
-  const handleOpen = (images: IImage[] | []) => {
-    if (images === []) {
-      setIsOpenDialog(true);
-    }
-  };
-
-  const handleClose = () => {
-    setIsOpenDialog(false);
-  };
 
   const removeImage = (index: number) => {
     setBeforeImages([...images]);
@@ -108,7 +89,7 @@ export default function ImageCard(props: any) {
     );
     setIsEnableBeforeImagesButton(true);
     if (index === 0) {
-      setIsOpenDialog(true);
+      props.setIsOpenDialog(true);
     }
   };
 
@@ -123,40 +104,9 @@ export default function ImageCard(props: any) {
     setIsEnableBeforeImagesButton(false);
   };
 
-  const toMoveHome = () => {
-    props.history.go(0)
-  };
-
-  const toMoveFavorite = () => {
-    props.history.push("/favorite/images");
-  }
 
   return (
     <div className={classes.root}>
-      {isOpenDialog ? (
-        <Dialog
-          open={isOpenDialog}
-          TransitionComponent={Transition}
-          keepMounted
-          aria-labelledby="dialog"
-          fullWidth={true}
-          max-width="lg"
-          className={classes.dialog}
-        >
-          <DialogTitle className={classes.dialogTitle}>
-            お気に入りの画像は見つかりましたか？
-          </DialogTitle>
-          <DialogActions className={classes.dialogActions}>
-            <Button onClick={toMoveFavorite} style={{ backgroundColor: "#cddc39", color: "white", fontWeight:"bold" }}>
-              はい、お気に入りした画像を見る
-            </Button>
-            <Button onClick={toMoveHome} color="inherit">
-              いいえ、まだ探す
-            </Button>
-          </DialogActions>
-        </Dialog>
-      ) : (
-        <div>
           {images.map((item: IImage, index) => (
             <Card className={classes.card} key={index}>
               <CardMedia
@@ -189,8 +139,6 @@ export default function ImageCard(props: any) {
               前の画像に戻る
             </IconButton>
           )}
-        </div>
-      )}
     </div>
   );
 }

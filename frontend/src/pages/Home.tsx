@@ -21,6 +21,7 @@ import { TransitionProps } from "@material-ui/core/transitions";
 
 // component
 import ImageCard from "components/ImageCard";
+import EmptyImagesDialog from "components/EmptyImagesDialog"
 
 // export const ImagesContext = createContext();
 
@@ -52,6 +53,8 @@ export default function Home() {
   const history = useHistory();
 
   const [images, setImages] = useState<IImage[] | []>([]);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
 
   useEffect((): void => {
     async function fetchImages() {
@@ -80,16 +83,15 @@ export default function Home() {
 
   return (
     <div className={classes.home}>
-      {/* <Typography
-            variant="h5"
-            className={classes.homeTitle}
-      >
-            画像を見つける
-      </Typography> */}
+      <EmptyImagesDialog
+        history={history}
+        isOpenDialog={isOpenDialog}
+      />
       <div className={classes.homeCard}>
         <ImageCard
           images={images}
           setImages={setImages}
+          setIsOpenDialog={setIsOpenDialog}
           onClickFavoriteButton={onClickFavoriteButton}
           history={history}
         ></ImageCard>
