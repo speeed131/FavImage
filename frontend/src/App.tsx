@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
@@ -11,6 +10,7 @@ import Header from "layouts/Header";
 import SideBar from "layouts/SideBar";
 
 // page
+import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
@@ -40,6 +40,7 @@ const App: React.FC = () => {
           <SideBar />
           <div className={classes.mainContent}>
             <Switch>
+              <Route path="/lp" component={Landing} exact></Route>
               <Route path="/sign-up" component={SignUp} exact />
               <Route path="/sign-in" component={SignIn} exact />
               <div className={classes.mainContentWithSideBar}>

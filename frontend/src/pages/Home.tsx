@@ -15,7 +15,7 @@ import EmptyImagesDialog from "components/EmptyImagesDialog";
 // export const ImagesContext = createContext();
 
 export default function Home() {
-  const useStyles = makeStyles((theme: Theme) =>
+  const useStyles = makeStyles(() =>
     createStyles({
       home: {
         width: "100%",
@@ -49,7 +49,7 @@ export default function Home() {
       const res = await api.image.getImagesAtRandom();
       if (res === undefined) {
         setImages([]);
-        history.push("/sign-in");
+        history.push("/lp");
       } else {
         setImages(res);
       }
