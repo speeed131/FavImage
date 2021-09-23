@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     margin: 16,
-  }
+  },
 }));
 
 type HowToUseItems = { title: string; imageSrc: string; body: string };
@@ -216,13 +216,13 @@ export default function Landing() {
           ))}
         </div>
         <div className={classes.footerSection}>
-            <Button
+          <Button
             className={classes.button}
             variant="contained"
             onClick={toMoveSignUp}
-            >
+          >
             さっそく始める
-            </Button>
+          </Button>
         </div>
       </Container>
     </div>
