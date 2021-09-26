@@ -15,22 +15,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   introduceSection: {
-    // height: 800,
-    // width: "100%",
-    // position: "relative",
     display: "flex",
     flexWrap: "wrap",
     marginBottom: 36,
   },
   introduceSectionImg: {
     height: 300,
-    // opacity: 0.3,
-    // width: "100%",
   },
   introduceSectionContent: {
-    // position: "absolute",
-    // top: 160,
-    // left: 134.5,
     textAlign: "center",
     flexGrow: 1,
     flexBasis: "100%",
@@ -67,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   card: {
-    // flexGrow: 1,
     padding: "16px 0",
     margin: "16px",
     flexBasis: "80%",
