@@ -12,7 +12,6 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-
 const useStyles = makeStyles((theme) => ({
   introduceSection: {
     display: "flex",

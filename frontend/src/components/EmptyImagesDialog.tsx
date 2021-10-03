@@ -59,6 +59,9 @@ export default function EmptyImagesDialog(props: any) {
         お気に入りの画像は見つかりましたか？
       </DialogTitle>
       <DialogActions className={classes.dialogActions}>
+        <Button onClick={toMoveHome} color="inherit">
+          いいえ、まだ探す
+        </Button>
         <Button
           onClick={toMoveFavorite}
           style={{
@@ -68,9 +71,6 @@ export default function EmptyImagesDialog(props: any) {
           }}
         >
           はい、お気に入りした画像を見る
-        </Button>
-        <Button onClick={toMoveHome} color="inherit">
-          いいえ、まだ探す
         </Button>
       </DialogActions>
     </Dialog>
