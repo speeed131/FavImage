@@ -45,8 +45,10 @@ export default function Home() {
         backgroundColor: theme.palette.background.paper,
       },
       imageList: {
-        width: 640,
-        height: 470,
+        width: 750,
+      },
+      imageListItemBar: {
+        maxHeight: 30,
       },
       icon: {
         color: "rgba(255, 255, 255, 0.54)",
@@ -62,16 +64,17 @@ export default function Home() {
 
   return (
     <div className={classes.root}>
-      <ImageList rowHeight={470} cols={1} className={classes.imageList}>
-        {images.length === 0 && (
-          <Typography variant="h6">
-            まだお気に入り登録した画像はありません。
-          </Typography>
-        )}
+      {images.length === 0 && (
+        <Typography variant="h6">
+          まだお気に入り登録した画像はありません。
+        </Typography>
+      )}
+      <ImageList rowHeight={150} cols={5} className={classes.imageList}>
         {images.map((item) => (
           <ImageListItem key={item.image_id}>
-            <img src={item.large_image_url} alt={item.page_url} />
+            <img src={item.preview_url} alt={item.page_url} />
             <ImageListItemBar
+              className={classes.imageListItemBar}
               actionIcon={
                 <IconButton
                   aria-label={`info about ${item.page_url}`}
