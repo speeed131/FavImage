@@ -1,8 +1,10 @@
 from sqlalchemy import create_engine
 
 from api.models.model import Base
+import api.settings as settings
 
-DB_URL = "mysql+pymysql://root@db:3306/fav_image?charset=utf8"
+
+DB_URL = settings.ASYNC_DB_URL
 engine = create_engine(DB_URL, echo=True)
 
 
