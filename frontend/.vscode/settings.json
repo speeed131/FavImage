@@ -1,0 +1,36 @@
+{
+    // editor's default tab size
+    "editor.tabSize": 2,
+    // eslint's validation target programming langs / libs
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+      "vue"
+    ],
+    // auto format on save（cmd + S)
+    "editor.codeActionsOnSave": {
+      // auto format files supported by ESLint on save
+      "source.fixAll.eslint": true,
+    },
+    // Exclude files from VScode Explorer
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/package-lock.json": false,
+      "**/yarn.lock": false,
+      "**/node_modules": true,
+      "**/node_modules/": true,
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true,
+      "**/.factorypath": true,
+      "**/coverage": true
+    },
+    // files that do not watch by VSCode (for editor performance)
+    "files.watcherExclude": {
+      "**/.dist/**": true,
+      "**/node_modules/**": true,
+      "**/package-lock.json": true,
+      "**/snapshot/output/**": true
+    },
+}
